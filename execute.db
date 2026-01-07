@@ -1,0 +1,47 @@
+CREATE DATABASE school_db;
+USE school_db;
+
+CREATE TABLE degree (
+    degree_id INT AUTO_INCREMENT PRIMARY KEY,
+    degree_desc VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE student (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    degree_id INT,
+    student_fname VARCHAR(50),
+    student_lname VARCHAR(50),
+    FOREIGN KEY (degree_id) REFERENCES degree(degree_id)
+);
+
+CREATE TABLE teacher (
+    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_fname VARCHAR(50),
+    teacher_lname VARCHAR(50)
+);
+
+CREATE TABLE course (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_id INT,
+    course_desc VARCHAR(100),
+    FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id)
+);
+
+CREATE TABLE class (
+    class_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id INT,
+    teacher_id INT,
+    class_desc VARCHAR(100),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id)
+);
+
+CREATE TABLE student_class (
+    student_class_id INT AUTO_INCREMENT PRIMARY KEY,
+    class_id INT,
+    teacher_id INT,
+    student_id INT,
+    FOREIGN KEY (class_id) REFERENCES class(class_id),
+    FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id),
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
+);
